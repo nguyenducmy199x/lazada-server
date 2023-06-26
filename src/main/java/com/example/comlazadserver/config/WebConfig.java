@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.servlet.configuration.WebMvcSecurityConfiguration;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -38,5 +40,9 @@ public class WebConfig {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         System.out.println("end.......");
         return http.build();
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

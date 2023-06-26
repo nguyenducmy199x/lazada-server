@@ -22,7 +22,7 @@ public class AuthenApi {
         User user = userRepository.findByUsername(authenRequest.getUsername());
         String jwtToken = "";
         AuthenResponse authenResponse = new AuthenResponse();
-        if(user != null){
+        if(user != null && user.getPassword().equals(authenRequest.getPassword())){
             jwtToken = jwtService.generateJwtToken(user.getUsername());
             authenResponse.setToken(jwtToken);
             authenResponse.setCode("200");
