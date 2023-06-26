@@ -17,7 +17,7 @@ public class AuthenApi {
     @Autowired
     JwtService jwtService;
 
-    @PostMapping("/user")
+    @PostMapping("/login")
     public AuthenResponse authenticate(@RequestBody AuthenRequest authenRequest){
         User user = userRepository.findByUsername(authenRequest.getUsername());
         String jwtToken = "";
