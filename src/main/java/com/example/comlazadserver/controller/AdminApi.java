@@ -17,5 +17,8 @@ public class AdminApi {
     public String lazada(){
         return "lazada";
     }
-
+    @GetMapping("/lazada-get-products")
+    public String lazadaProducts(){
+        return "lazada-all-products";
+    }
 }
