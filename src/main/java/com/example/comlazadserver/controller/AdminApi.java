@@ -21,4 +21,8 @@ public class AdminApi {
     public String lazadaProducts(){
         return "lazada-all-products";
     }
+    @GetMapping("/home")
+    public String home(){
+        return "home";
+    }
 }
