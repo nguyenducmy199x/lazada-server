@@ -5,12 +5,14 @@ import com.example.comlazadserver.dto.AuthenResponse;
 import com.example.comlazadserver.entity.User;
 import com.example.comlazadserver.repository.UserRepository;
 import com.example.comlazadserver.service.JwtService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/authen")
 @CrossOrigin("http://localhost:4200")
+@Slf4j
 public class AuthenApi {
     @Autowired
     UserRepository userRepository;
@@ -31,7 +33,7 @@ public class AuthenApi {
             authenResponse.setCode("401");
             authenResponse.setStatus("Unauthorized");
         }
-
+        log.info("User is verified - token {}", jwtToken);
         return authenResponse;
     }
 
