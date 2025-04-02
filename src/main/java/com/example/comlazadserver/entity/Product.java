@@ -12,11 +12,11 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String productCategory;
-    private String productName;
-    private String productModel;
-    private String color;
-    private String description;
+    private String title;
     private String price;
-    private String image;
+
+    private String productDescribe;
+    private String category;
+
+    private String imageId;
 }

@@ -41,7 +41,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (isTokenVerified) {
             String username = jwtService.getUsername(jwtToken);
-            User user = userRepository.findByUsername(username);
+            User user = userRepository.findByUsername(username).orElseThrow();
             SecurityContextHolder.getContext().setAuthentication(UsernamePasswordAuthenticationToken.authenticated(user, null, null));
         }
         filterChain.doFilter(request, response);

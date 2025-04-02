@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  lazada-ui:
+    image: myn199x/my-lazada-ui:latest
+  mylazada:
+    image: myn199x/my-lazada-app:latest
+    environment:
+      DB_HOST: 103.27.239.229
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: admin
+      DB_NAME: lazada
