@@ -1,6 +1,7 @@
 package com.example.comlazadserver.controller;
 
 
+import com.example.comlazadserver.dto.BaseResponse;
 import com.example.comlazadserver.dto.PageProductRequest;
 import com.example.comlazadserver.dto.ProductRequest;
 import com.example.comlazadserver.dto.ProductResponse;
@@ -59,20 +60,25 @@ public class ProductApi {
     }
 
     @PostMapping(value = "/add-product", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<String> addProduct(@RequestPart("productDto") ProductRequest productDto,
-                                             @RequestPart(value = "image", required = false) MultipartFile imageFile) throws IOException  {
+    public BaseResponse<String> addProduct(@RequestPart("productDto") ProductRequest productDto,
+                                           @RequestPart(value = "image", required = false) MultipartFile imageFile) throws IOException  {
         productService.addProductService(productDto, imageFile);
 
         if (Objects.isNull(imageFile)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Image is required.");
+            return BaseResponse.fail("image is null");
         }
-        return ResponseEntity.ok("Product Added Successfully");
+        return BaseResponse.success("Product Added Successfully");
     }
 
-    @PatchMapping("/edit-product")
-    public ResponseEntity<String> editProduct(HttpServletRequest request) throws IOException {
-        productService.editProductService(request);
-        return ResponseEntity.ok("Edit Successfully");
+    @PatchMapping(value = "/edit-product", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public BaseResponse<String> editProduct(@RequestPart("productDto") ProductRequest productDto,
+                                           @RequestPart(value = "image", required = false) MultipartFile imageFile) throws IOException  {
+        productService.editProductService(productDto, imageFile);
+
+        if (Objects.isNull(imageFile)) {
+            return BaseResponse.fail("image is null");
+        }
+        return BaseResponse.success("Product Added Successfully");
     }
 
     @PostMapping("/get-products-by-category")

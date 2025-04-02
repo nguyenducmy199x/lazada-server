@@ -1,6 +1,7 @@
 package com.example.comlazadserver.service;
 
 
+
 import com.example.comlazadserver.dto.ProductRequest;
 import com.example.comlazadserver.entity.Product;
 import com.example.comlazadserver.repository.ProductRepository;
@@ -23,9 +24,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.example.comlazadserver.constants.AppConstants.ROOT_PATH;
+
 @Service
 public class ProductService {
-    private final String ROOT_PATH = "src/main/resources/images/";
+
     @Autowired
     ObjectMapper om;
     @Autowired
@@ -50,30 +53,22 @@ public class ProductService {
         }
     }
 
-    public void editProductService(HttpServletRequest request) throws IOException {
-        Map<String, String[]> category = request.getParameterMap();
-        String productRequest = Arrays.stream(category.get("body")).findFirst().get();
-        System.out.println(productRequest);
-        MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-        Map<String, MultipartFile> files = multipartHttpServletRequest.getFileMap();
-        MultipartFile image = files.get("file");
-        ProductRequest product = om.readValue(productRequest, ProductRequest.class);
-        Product existProduct = productRepository.findProductByTitle(product.getTitle()).orElseThrow();
-
-        String imageId = existProduct.getImageId();
-        Path pathImageId = Path.of(ROOT_PATH + imageId);
-        Files.deleteIfExists(pathImageId);
-        File imageDest = new File(ROOT_PATH + "Product_" + UUID.randomUUID());
+    public void editProductService(ProductRequest request, MultipartFile imageFile) throws IOException {
+        ClassPathResource pathResource = new ClassPathResource(ROOT_PATH);
+        File imageDest = new File(pathResource.getPath() + "Product_" + UUID.randomUUID());
         String productImageId = imageDest.getName();
+        Product newProduct = new Product();
+        newProduct.setCategory(request.getCategory());
+        newProduct.setTitle(request.getTitle().trim());
+        newProduct.setPrice(request.getPrice());
+        newProduct.setProductDescribe(request.getDescribe());
+        newProduct.setImageId(productImageId);
+        productRepository.save(newProduct);
 
-        existProduct.setPrice(product.getPrice());
-        existProduct.setProductDescribe(product.getDescribe());
-        existProduct.setImageId(productImageId);
         try {
-            image.transferTo(imageDest.toPath());
+            imageFile.transferTo(imageDest.toPath());
         } catch (NoSuchFileException e) {
             System.out.println(e);
         }
-        productRepository.save(existProduct);
     }
 }

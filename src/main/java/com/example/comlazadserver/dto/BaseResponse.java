@@ -20,4 +20,7 @@ public class BaseResponse<T> {
     public static <T> BaseResponse<T> success(T data) {
         return new BaseResponse<>(200, "Success", data);
     }
+    public static <T> BaseResponse<T> fail(T data) {
+        return new BaseResponse<>(400, "Error", data);
+    }
 }
