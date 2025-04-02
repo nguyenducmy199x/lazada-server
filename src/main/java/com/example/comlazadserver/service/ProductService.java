@@ -32,32 +32,22 @@ public class ProductService {
     ProductRepository productRepository;
 
     public void addProductService(ProductRequest request, MultipartFile imageFile) throws IOException {
-//        Map<String, String[]> category = request.getParameterMap();
-//        String productRequest = Arrays.stream(category.get("body")).findFirst().get();
-//        System.out.println(productRequest);
-//        String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-//        ProductRequest product = om.readValue(body, ProductRequest.class);
-
-//        MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-//        Map<String, MultipartFile> files = multipartHttpServletRequest.getFileMap();
-//        MultipartFile image = files.get("file");
-//        ClassPathResource pathResource = new ClassPathResource(ROOT_PATH);
-//        File imageDest = new File(pathResource.getPath() + "Product_" + UUID.randomUUID());
-//        System.out.println(imageDest.getName());
-//        String productImageId = imageDest.getName();
+        ClassPathResource pathResource = new ClassPathResource(ROOT_PATH);
+        File imageDest = new File(pathResource.getPath() + "Product_" + UUID.randomUUID());
+        String productImageId = imageDest.getName();
         Product newProduct = new Product();
         newProduct.setCategory(request.getCategory());
         newProduct.setTitle(request.getTitle().trim());
         newProduct.setPrice(request.getPrice());
         newProduct.setProductDescribe(request.getDescribe());
-//        newProduct.setImageId(productImageId);
+        newProduct.setImageId(productImageId);
         productRepository.save(newProduct);
-//
-//        try {
-//            image.transferTo(imageDest.toPath());
-//        } catch (NoSuchFileException e) {
-//            System.out.println(e);
-//        }
+
+        try {
+            imageFile.transferTo(imageDest.toPath());
+        } catch (NoSuchFileException e) {
+            System.out.println(e);
+        }
     }
 
     public void editProductService(HttpServletRequest request) throws IOException {

@@ -26,6 +26,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
 
 @RestController
@@ -59,19 +60,15 @@ public class ProductApi {
 
     @PostMapping(value = "/add-product", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<String> addProduct(@RequestPart("productDto") ProductRequest productDto,
-                                             @RequestPart("image") MultipartFile imageFile)  {
+                                             @RequestPart(value = "image", required = false) MultipartFile imageFile) throws IOException  {
 //        productService.addProductService(productDto, imageFile);
 
-        System.out.println(imageFile.getName());
+        if (Objects.isNull(imageFile)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Image is required.");
+        }
         return ResponseEntity.ok("Product Added Successfully");
     }
 
-//    @PostMapping("/add-product")
-//    public ResponseEntity<String> addProduct(@RequestBody ProductRequest productDto) throws IOException, ServletException {
-//        productService.addProductService(productDto);
-//        System.out.println(request);
-//        return ResponseEntity.ok("Product Added Successfully");
-//    }
     @PatchMapping("/edit-product")
     public ResponseEntity<String> editProduct(HttpServletRequest request) throws IOException {
         productService.editProductService(request);
