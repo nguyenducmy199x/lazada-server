@@ -61,7 +61,7 @@ public class ProductApi {
     @PostMapping(value = "/add-product", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<String> addProduct(@RequestPart("productDto") ProductRequest productDto,
                                              @RequestPart(value = "image", required = false) MultipartFile imageFile) throws IOException  {
-//        productService.addProductService(productDto, imageFile);
+        productService.addProductService(productDto, imageFile);
 
         if (Objects.isNull(imageFile)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Image is required.");
