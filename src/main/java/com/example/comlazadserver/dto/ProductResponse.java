@@ -13,6 +13,7 @@ public class ProductResponse {
     private String describe;
 
     private String image;
+    private String totalItems;
 
 
 }

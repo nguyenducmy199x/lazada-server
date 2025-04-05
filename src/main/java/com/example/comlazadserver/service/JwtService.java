@@ -20,7 +20,7 @@ public class JwtService {
         return JWT.create()
                 .withIssuer(username)
                 .withIssuedAt(new Date(System.currentTimeMillis()))
-                .withExpiresAt(new Date(System.currentTimeMillis() + 15*60*1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60*60*1000))
                 .sign(Algorithm.HMAC256(SECRET_KEY));
     }
     public boolean verifyToken(String token){

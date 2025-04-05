@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface ProductPaginationRepository extends PagingAndSortingRepository<Product, Long> {
     List<Product> findAllByCategory(String category, Pageable pageable);
+
+    List<Product> findByCategory(String category);
 }
