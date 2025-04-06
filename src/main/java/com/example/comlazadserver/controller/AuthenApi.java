@@ -7,6 +7,7 @@ import com.example.comlazadserver.service.AccountService;
 import com.example.comlazadserver.service.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,21 +25,12 @@ public class AuthenApi {
     AccountService accountService;
 
     @PostMapping("/login")
-    public AuthenResponse authenticate(@RequestBody AuthenRequest authenRequest){
-        User user = userRepository.findByUsername(authenRequest.getUsername()).orElseThrow();
-        String jwtToken = "";
-        AuthenResponse authenResponse = new AuthenResponse();
-        if(user != null && passwordEncoder.matches(authenRequest.getPassword(), user.getPassword())){
-            jwtToken = jwtService.generateJwtToken(user.getUsername());
-            authenResponse.setToken(jwtToken);
-            authenResponse.setCode("200");
-            authenResponse.setStatus("User Verified");
-        }else{
-            authenResponse.setCode("401");
-            authenResponse.setStatus("Unauthorized");
+    public BaseResponse<String> authenticate(@RequestBody AuthenRequest authenRequest){
+        User user = userRepository.findByUsername(authenRequest.getUsername()).orElseThrow(()->new UsernameNotFoundException("User not found"));
+        if(user == null || !passwordEncoder.matches(authenRequest.getPassword(), user.getPassword())){
+            return BaseResponse.failCode(null, 401, "Unauthorized");   
         }
-        log.info("User is verified - token {}", jwtToken);
-        return authenResponse;
+        return BaseResponse.success(jwtService.generateJwtToken(user.getUsername()));
     }
 
     @PostMapping("/new-account")

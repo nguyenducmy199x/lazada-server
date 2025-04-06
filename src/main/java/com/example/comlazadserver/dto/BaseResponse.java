@@ -22,4 +22,7 @@ public class BaseResponse<T> {
     public static <T> BaseResponse<T> fail(T data) {
         return new BaseResponse<>(400, "Error", data);
     }
+    public static <T> BaseResponse<T> failCode(T data, int code, String status) {
+        return new BaseResponse<>(code, status, data);
+    }
 }

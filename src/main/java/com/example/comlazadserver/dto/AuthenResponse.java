@@ -7,4 +7,5 @@ import lombok.NoArgsConstructor;
 @Data @AllArgsConstructor @NoArgsConstructor
 public class AuthenResponse extends BaseResponse{
     private String token;
+    
 }
