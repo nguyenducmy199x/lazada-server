@@ -1,8 +1,6 @@
 package com.example.comlazadserver.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter

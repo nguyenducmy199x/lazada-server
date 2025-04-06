@@ -5,25 +5,16 @@ import com.example.comlazadserver.dto.BaseResponse;
 import com.example.comlazadserver.dto.PageProductRequest;
 import com.example.comlazadserver.dto.ProductRequest;
 import com.example.comlazadserver.dto.ProductResponse;
-import com.example.comlazadserver.entity.Product;
-import com.example.comlazadserver.repository.ProductPaginationRepository;
 import com.example.comlazadserver.repository.ProductRepository;
 import com.example.comlazadserver.service.ProductService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 
 

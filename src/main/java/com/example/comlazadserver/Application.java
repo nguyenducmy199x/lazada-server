@@ -1,13 +1,10 @@
 package com.example.comlazadserver;
 
-import com.example.comlazadserver.entity.User;
 import com.example.comlazadserver.repository.UserRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.List;
 
 @SpringBootApplication
 public class Application {

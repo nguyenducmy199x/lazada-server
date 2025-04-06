@@ -5,7 +5,6 @@ import com.example.comlazadserver.dto.AccountRes;
 import com.example.comlazadserver.entity.User;
 import com.example.comlazadserver.repository.UserRepository;
 import lombok.SneakyThrows;
-import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
