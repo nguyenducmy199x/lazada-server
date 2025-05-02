@@ -1,18 +1,28 @@
 package com.example.comlazadserver.controller;
 
-import com.example.comlazadserver.dto.*;
+import com.example.comlazadserver.dto.AccountReq;
+import com.example.comlazadserver.dto.AccountRes;
+import com.example.comlazadserver.dto.AuthenRequest;
+import com.example.comlazadserver.dto.BaseResponse;
 import com.example.comlazadserver.entity.User;
 import com.example.comlazadserver.repository.UserRepository;
 import com.example.comlazadserver.service.AccountService;
 import com.example.comlazadserver.service.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/authen")
+@Tag(name = "Authen", description = "Operations related to users authen")
 @Slf4j
 public class AuthenApi {
     @Autowired
@@ -25,6 +35,9 @@ public class AuthenApi {
     AccountService accountService;
 
     @PostMapping("/login")
+    @Operation(summary = "login", description = "login")
+    @ApiResponse(responseCode = "200", description = "Successful operation")
+    @ApiResponse(responseCode = "401", description = "Unauthorized")
     public BaseResponse<String> authenticate(@RequestBody AuthenRequest authenRequest){
         User user = userRepository.findByUsername(authenRequest.getUsername()).orElseThrow(()->new UsernameNotFoundException("User not found"));
         if(user == null || !passwordEncoder.matches(authenRequest.getPassword(), user.getPassword())){
@@ -34,6 +47,9 @@ public class AuthenApi {
     }
 
     @PostMapping("/new-account")
+    @Operation(summary = "add new acc", description = "add new acc")
+    @ApiResponse(responseCode = "200", description = "Successful operation")
+    @ApiResponse(responseCode = "400", description = "failed")
     public BaseResponse<AccountRes> addNewAcc(@RequestBody AccountReq accountReq){
         return BaseResponse.success(accountService.createAccount(accountReq));
     }

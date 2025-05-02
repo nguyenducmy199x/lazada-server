@@ -31,7 +31,7 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String bearerToken = request.getHeader("Authorization");
         String jwtToken = "";
-        if (!bearerToken.isEmpty() && bearerToken != null && bearerToken.startsWith("Bearer")) {
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             jwtToken = bearerToken.substring(7);
         }
         boolean isTokenVerified = jwtService.verifyToken(jwtToken);

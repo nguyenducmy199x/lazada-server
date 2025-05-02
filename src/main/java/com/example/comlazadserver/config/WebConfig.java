@@ -1,6 +1,7 @@
 package com.example.comlazadserver.config;
 
 import com.example.comlazadserver.filter.JwtFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,22 +15,32 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@Slf4j
 public class WebConfig {
     @Autowired
     JwtFilter jwtFilter;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        System.out.println("start.......");
+        log.info("start.......");
+
         http.cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/authen/**")
+                .requestMatchers(
+                        "/api/v1/authen/**",
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/v3/api-docs",
+                        "/api-docs/**" // thêm nếu bạn config đường dẫn khác
+                )
                 .permitAll()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        System.out.println("end.......");
+
+        log.info("end.......");
+
         return http.build();
     }
     @Bean

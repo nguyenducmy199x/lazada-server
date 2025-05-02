@@ -34,13 +34,12 @@ public class ProductService {
     private final ObjectMapper om;
     private final ProductRepository productRepository;
     private final ProductPaginationRepository productPaginationRepository;
-    private final ProductMapper productMapper;
 
     public void addProductService(ProductRequest request, MultipartFile imageFile) throws IOException {
         ClassPathResource pathResource = new ClassPathResource(ROOT_PATH);
         File imageDest = new File(pathResource.getPath() + "Product_" + UUID.randomUUID());
         String productImageId = imageDest.getName();
-        Product newProduct = productMapper.toEntity(request);
+        Product newProduct = ProductMapper.INSTANCE.toEntity(request);
         newProduct.setImageId(productImageId);
         productRepository.save(newProduct);
         try {
@@ -54,7 +53,7 @@ public class ProductService {
         ClassPathResource pathResource = new ClassPathResource(ROOT_PATH);
         File imageDest = new File(pathResource.getPath() + "Product_" + UUID.randomUUID());
         String productImageId = imageDest.getName();
-        Product newProduct = productMapper.toEntity(request);
+        Product newProduct = ProductMapper.INSTANCE.toEntity(request);
         newProduct.setImageId(productImageId);
         productRepository.save(newProduct);
         try {
@@ -81,7 +80,7 @@ public class ProductService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            ProductResponse productResponse = productMapper.toResponse(product);
+            ProductResponse productResponse = ProductMapper.INSTANCE.toResponse(product);
             productResponse.setImage(encodeImage);
             res.add(productResponse);
         });
@@ -105,7 +104,7 @@ public class ProductService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            ProductResponse productResponse = productMapper.toResponse(product);
+            ProductResponse productResponse = ProductMapper.INSTANCE.toResponse(product);
             productResponse.setImage(encodeImage);
             res.add(productResponse);
         });
