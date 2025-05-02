@@ -31,19 +31,6 @@ public class ProductApi {
     @Autowired
     ProductService productService;
 
-//    @GetMapping("/get-products")
-//    public String getProducts(){
-//        String url = "http://localhost:8080/api/v1/store/get-stores";
-//        String bearer = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        String token = bearer.substring(7);
-////        String url = "http://localhost:8083/api/v1/store/get-stores";
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add(HttpHeaders.AUTHORIZATION, token);
-//        HttpEntity httpEntity = new HttpEntity<>(headers);
-//        ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-//        return "products" + " - " + result.getBody();
-//    }
-
     @PostMapping(value = "/add-product", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public BaseResponse<String> addProduct(@RequestPart("productDto") ProductRequest productDto,
                                            @RequestPart(value = "image", required = false) MultipartFile imageFile) throws IOException  {
