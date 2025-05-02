@@ -25,10 +25,6 @@ import java.util.*;
 @RequestMapping("/api/v1/product")
 @Tag(name = "Products", description = "Operations related to products")
 public class ProductApi {
-    @Autowired
-    RestTemplate restTemplate;
-    @Autowired
-    HttpServletRequest request;
 
     @Autowired
     ProductRepository productRepository;
