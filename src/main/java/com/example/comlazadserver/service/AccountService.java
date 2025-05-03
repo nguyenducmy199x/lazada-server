@@ -21,8 +21,8 @@ public class AccountService {
 
     @SneakyThrows
     public AccountRes createAccount(AccountReq accountReq) {
-        Optional<User> exist = userRepository.findByUsername(accountReq.getUsername());
-        if(exist.get() != null) {
+        User exist = userRepository.findByUsername(accountReq.getUsername());
+        if(exist != null) {
             throw new Exception();
         }
         User user = User.builder()
