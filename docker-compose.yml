@@ -5,8 +5,8 @@ services:
   mylazada:
     image: myn199x/my-lazada-app:latest
     environment:
-      DB_HOST: 103.27.239.229
+      DB_HOST: 52.62.99.94
       DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASS: admin
+      DB_USER: root
+      DB_PASS: 123456789
       DB_NAME: lazada
