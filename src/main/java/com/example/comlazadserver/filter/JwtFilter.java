@@ -1,6 +1,5 @@
 package com.example.comlazadserver.filter;
 
-import com.example.comlazadserver.dto.AuthenRequest;
 import com.example.comlazadserver.entity.User;
 import com.example.comlazadserver.repository.UserRepository;
 import com.example.comlazadserver.service.JwtService;
@@ -45,7 +44,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request)  {
         return matcher.matches(request);
     }
 
