@@ -14,14 +14,5 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-//	@PostConstruct
-//	public void init(){
-//		User user = new User();
-//		user.setUsername("myn");
-//		user.setPassword("123");
-//		user.setEmail("nguyenducmy199x@gmail.com");
-//		user.setRoles(List.of("ADMIN"));
-//		userRepository.save(user);
-//	}
 
 }
