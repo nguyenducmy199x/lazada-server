@@ -38,11 +38,10 @@ public class AuthenApi {
     @Operation(summary = "login", description = "login")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @ApiResponse(responseCode = "401", description = "Unauthorized")
-    public BaseResponse<String> authenticate(@RequestBody AuthenRequest authenRequest){
-        User user = userRepository.findByUsername(authenRequest.getUsername()).orElseThrow(()->new UsernameNotFoundException("User not found"));
-        if(user == null || !passwordEncoder.matches(authenRequest.getPassword(), user.getPassword())){
-            return BaseResponse.failCode(null, 401, "Unauthorized");   
-        }
+    public BaseResponse<String> authenticate(@RequestBody AuthenRequest authenRequest) {
+        User user = userRepository.findByUsername(authenRequest.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (user == null || !passwordEncoder.matches(authenRequest.getPassword(), user.getPassword()))
+            return BaseResponse.failCode(null, 401, "Unauthorized");
         return BaseResponse.success(jwtService.generateJwtToken(user.getUsername()));
     }
 
@@ -50,7 +49,7 @@ public class AuthenApi {
     @Operation(summary = "add new acc", description = "add new acc")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @ApiResponse(responseCode = "400", description = "failed")
-    public BaseResponse<AccountRes> addNewAcc(@RequestBody AccountReq accountReq){
+    public BaseResponse<AccountRes> addNewAcc(@RequestBody AccountReq accountReq) {
         return BaseResponse.success(accountService.createAccount(accountReq));
     }
 }
