@@ -14,4 +14,5 @@
 # B3 :
 # chạy docker backend 
 # docker run -d --name backend --network=my-network  -p 8081:8081 -v /root/keystore.p12:/app/keystore.p12 myn199x/my-lazada-app:latest
+# or 
 # docker run -d --name backend --network=my-network -p 8081:8081 myn199x/my-lazada-app:latest
