@@ -71,7 +71,7 @@ public class ProductController {
     @Operation(summary = "get-product-by-title-and-by-paging-number", description = "get-product-by-title-and-by-paging-number")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @ApiResponse(responseCode = "400", description = "failed")
-    public Map<String, Object> getProductsByTitleAndByPagingNumber(@RequestBody PageProductRequest body) throws IOException {
+    public Map<String, Object> getProductsByTitleAndByPagingNumber(@RequestBody PageProductRequest body) {
         return productService.getProductsByTitleAndByPagingNumber(body);
     }
     @PostMapping("/search-by-product-title")
