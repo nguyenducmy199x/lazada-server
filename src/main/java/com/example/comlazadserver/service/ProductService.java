@@ -40,8 +40,8 @@ public class ProductService {
         var productImageId = s3Service.uploadFile(imageFile);
         Product newProduct = ProductMapper.INSTANCE.toEntity(request);
         newProduct.setImageId(productImageId);
+        log.info("New product: {}", newProduct);
         productRepository.save(newProduct);
-
     }
 
     public void editProductService(ProductRequest request, MultipartFile imageFile) throws IOException {

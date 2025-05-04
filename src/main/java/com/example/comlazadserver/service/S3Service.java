@@ -26,7 +26,6 @@ public class S3Service {
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(bucketName)
                 .key(filename)
-                .acl("public-read") // cho phép truy cập công khai
                 .contentType(file.getContentType())
                 .build();
 
