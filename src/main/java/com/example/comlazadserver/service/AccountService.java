@@ -5,9 +5,11 @@ import com.example.comlazadserver.dto.AccountRes;
 import com.example.comlazadserver.entity.User;
 import com.example.comlazadserver.repository.UserRepository;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -21,9 +23,9 @@ public class AccountService {
 
     @SneakyThrows
     public AccountRes createAccount(AccountReq accountReq) {
-        User exist = userRepository.findByUsernameOrEmail(accountReq.getUsername(), accountReq.getEmail());
-        if(exist != null) {
-            throw new Exception(accountReq.getUsername() + " already exists");
+        List<User> exist = userRepository.findByUsernameOrEmail(accountReq.getUsername(), accountReq.getEmail());
+        if(ObjectUtils.allNotNull(exist)) {
+            throw new IllegalArgumentException("Tài khoản với username "  +accountReq.getUsername() + " ,email " + accountReq.getEmail() + " đã tồn tại !");
         }
         User user = User.builder()
                 .email(accountReq.getEmail()).username(accountReq.getUsername())
