@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/authen")
 @Tag(name = "Authen", description = "Operations related to users authen")
 @Slf4j
-public class AuthenApi {
+public class UserController {
     @Autowired
     UserRepository userRepository;
     @Autowired

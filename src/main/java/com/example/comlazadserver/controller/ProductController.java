@@ -24,7 +24,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/v1/product")
 @Tag(name = "Products", description = "Operations related to products")
-public class ProductApi {
+public class ProductController {
 
     @Autowired
     ProductRepository productRepository;
