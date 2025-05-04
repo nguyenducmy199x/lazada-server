@@ -34,33 +34,21 @@ public class ProductService {
     private final ObjectMapper om;
     private final ProductRepository productRepository;
     private final ProductPaginationRepository productPaginationRepository;
+    private final S3Service s3Service;
 
     public void addProductService(ProductRequest request, MultipartFile imageFile) throws IOException {
-        ClassPathResource pathResource = new ClassPathResource(ROOT_PATH);
-        File imageDest = new File(pathResource.getPath() + "Product_" + UUID.randomUUID());
-        String productImageId = imageDest.getName();
+        var productImageId = s3Service.uploadFile(imageFile);
         Product newProduct = ProductMapper.INSTANCE.toEntity(request);
         newProduct.setImageId(productImageId);
         productRepository.save(newProduct);
-        try {
-            imageFile.transferTo(imageDest.toPath());
-        } catch (NoSuchFileException e) {
-            log.info(e.getMessage());
-        }
+
     }
 
     public void editProductService(ProductRequest request, MultipartFile imageFile) throws IOException {
-        ClassPathResource pathResource = new ClassPathResource(ROOT_PATH);
-        File imageDest = new File(pathResource.getPath() + "Product_" + UUID.randomUUID());
-        String productImageId = imageDest.getName();
+        var productImageId = s3Service.uploadFile(imageFile);
         Product newProduct = ProductMapper.INSTANCE.toEntity(request);
         newProduct.setImageId(productImageId);
         productRepository.save(newProduct);
-        try {
-            imageFile.transferTo(imageDest.toPath());
-        } catch (NoSuchFileException e) {
-            log.info(e.getMessage());
-        }
     }
 
     public Map<String, Object> getProductsByTitleAndByPagingNumber(PageProductRequest body) throws IOException {
