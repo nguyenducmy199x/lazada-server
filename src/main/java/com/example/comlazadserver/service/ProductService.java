@@ -8,7 +8,6 @@ import com.example.comlazadserver.entity.Product;
 import com.example.comlazadserver.mapper.ProductMapper;
 import com.example.comlazadserver.repository.ProductPaginationRepository;
 import com.example.comlazadserver.repository.ProductRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
