@@ -4,13 +4,13 @@ import com.example.comlazadserver.dto.AccountReq;
 import com.example.comlazadserver.dto.AccountRes;
 import com.example.comlazadserver.entity.User;
 import com.example.comlazadserver.repository.UserRepository;
+import com.example.comlazadserver.utils.PasswordValidator;
 import lombok.SneakyThrows;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class AccountService {
@@ -23,10 +23,7 @@ public class AccountService {
 
     @SneakyThrows
     public AccountRes createAccount(AccountReq accountReq) {
-        List<User> exist = userRepository.findByUsernameOrEmail(accountReq.getUsername(), accountReq.getEmail());
-        if(ObjectUtils.allNotNull(exist)) {
-            throw new IllegalArgumentException("Tài khoản với username "  +accountReq.getUsername() + " ,email " + accountReq.getEmail() + " đã tồn tại !");
-        }
+        validateRequest(accountReq);
         User user = User.builder()
                 .email(accountReq.getEmail()).username(accountReq.getUsername())
                 .password(passwordEncoder.encode(accountReq.getPassword())).build();
@@ -35,5 +32,17 @@ public class AccountService {
         accountRes.setUsername(accountReq.getUsername());
         accountRes.setEmail(accountReq.getEmail());
         return accountRes;
+    }
+
+    public void validateRequest(AccountReq accountReq) {
+        User existUserName = userRepository.findByUsername(accountReq.getUsername());
+        if(!ObjectUtils.isEmpty(existUserName)) {
+            throw new IllegalArgumentException("Tài khoản với username "  +accountReq.getUsername() + " đã tồn tại !");
+        }
+        User existEmail = userRepository.findByEmail(accountReq.getEmail());
+        if(!ObjectUtils.isEmpty(existEmail)) {
+            throw new IllegalArgumentException("Tài khoản với email "  +accountReq.getEmail() + " đã tồn tại !");
+        }
+//        PasswordValidator.validate(accountReq.getPassword(), "password không hợp lệ");
     }
 }

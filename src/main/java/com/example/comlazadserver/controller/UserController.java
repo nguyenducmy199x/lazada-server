@@ -11,6 +11,7 @@ import com.example.comlazadserver.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,7 +49,7 @@ public class UserController {
     @Operation(summary = "add new acc", description = "add new acc")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @ApiResponse(responseCode = "400", description = "failed")
-    public BaseResponse<AccountRes> addNewAcc(@RequestBody AccountReq accountReq) {
+    public BaseResponse<AccountRes> addNewAcc(@RequestBody @Valid AccountReq accountReq) {
         return BaseResponse.success(accountService.createAccount(accountReq));
     }
 }
