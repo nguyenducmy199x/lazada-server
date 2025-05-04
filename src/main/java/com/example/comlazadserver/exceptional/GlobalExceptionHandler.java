@@ -26,4 +26,9 @@ public class GlobalExceptionHandler  {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         return BaseResponse.fail(fieldErrors.stream().findFirst().get().getDefaultMessage());
     }
+
+    @ExceptionHandler(BussinessException.class)
+    public BaseResponse<String> handleBussinessException(final BussinessException  ex){
+        return BaseResponse.fail(ex.getMessage());
+    }
 }

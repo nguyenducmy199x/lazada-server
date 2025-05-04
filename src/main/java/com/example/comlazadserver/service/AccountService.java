@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import java.util.List;
 
 @Component
 public class AccountService {
@@ -43,6 +42,6 @@ public class AccountService {
         if(!ObjectUtils.isEmpty(existEmail)) {
             throw new IllegalArgumentException("Tài khoản với email "  +accountReq.getEmail() + " đã tồn tại !");
         }
-//        PasswordValidator.validate(accountReq.getPassword(), "password không hợp lệ");
+        PasswordValidator.validate(accountReq.getPassword());
     }
 }
