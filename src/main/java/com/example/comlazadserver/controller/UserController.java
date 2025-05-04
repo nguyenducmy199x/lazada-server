@@ -44,7 +44,7 @@ public class UserController {
         return BaseResponse.success(jwtService.generateJwtToken(user.getUsername()));
     }
 
-    @PostMapping("/new-account")
+    @PostMapping("/register")
     @Operation(summary = "add new acc", description = "add new acc")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @ApiResponse(responseCode = "400", description = "failed")
