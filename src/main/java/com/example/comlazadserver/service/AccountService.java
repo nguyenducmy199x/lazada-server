@@ -21,7 +21,7 @@ public class AccountService {
 
     @SneakyThrows
     public AccountRes createAccount(AccountReq accountReq) {
-        User exist = userRepository.findByUsernameAndEmail(accountReq.getUsername(), accountReq.getEmail());
+        User exist = userRepository.findByUsernameOrEmail(accountReq.getUsername(), accountReq.getEmail());
         if(exist != null) {
             throw new Exception(accountReq.getUsername() + " already exists");
         }
