@@ -4,7 +4,6 @@ import com.example.comlazadserver.dto.AccountReq;
 import com.example.comlazadserver.dto.AccountRes;
 import com.example.comlazadserver.dto.AuthenRequest;
 import com.example.comlazadserver.dto.BaseResponse;
-import com.example.comlazadserver.entity.User;
 import com.example.comlazadserver.repository.UserRepository;
 import com.example.comlazadserver.service.AccountService;
 import com.example.comlazadserver.service.JwtService;
@@ -26,11 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class UserController {
     @Autowired
-    UserRepository userRepository;
-    @Autowired
     JwtService jwtService;
-    @Autowired
-    PasswordEncoder passwordEncoder;
     @Autowired
     AccountService accountService;
 
