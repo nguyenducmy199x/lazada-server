@@ -4,6 +4,8 @@ import com.example.comlazadserver.dto.AccountReq;
 import com.example.comlazadserver.dto.AccountRes;
 import com.example.comlazadserver.dto.AuthenRequest;
 import com.example.comlazadserver.dto.BaseResponse;
+import com.example.comlazadserver.entity.User;
+import com.example.comlazadserver.repository.UserRepository;
 import com.example.comlazadserver.service.AccountService;
 import com.example.comlazadserver.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class UserController {
     @Autowired
+    UserRepository userRepository;
+    @Autowired
     JwtService jwtService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Autowired
     AccountService accountService;
 
@@ -32,7 +39,10 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @ApiResponse(responseCode = "401", description = "Unauthorized")
     public BaseResponse<String> authenticate(@RequestBody AuthenRequest authenRequest) {
-        return BaseResponse.success(jwtService.generateJwtToken(authenRequest.getUsername()));
+        User user = userRepository.findByUsername(authenRequest.getUsername());
+        if (user == null || !passwordEncoder.matches(authenRequest.getPassword(), user.getPassword()))
+            return BaseResponse.failCode(null, 401, "Unauthorized");
+        return BaseResponse.success(jwtService.generateJwtToken(user.getUsername()));
     }
 
     @PostMapping("/register")

@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: lazada-server
+  config:
+    import: configserver:http://localhost:8888   # Địa chỉ của Config Server
+  profiles:
+    active: dev
+
