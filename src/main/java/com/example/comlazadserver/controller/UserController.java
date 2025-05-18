@@ -26,11 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class UserController {
     @Autowired
-    UserRepository userRepository;
-    @Autowired
     JwtService jwtService;
-    @Autowired
-    PasswordEncoder passwordEncoder;
     @Autowired
     AccountService accountService;
 
@@ -39,10 +35,7 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @ApiResponse(responseCode = "401", description = "Unauthorized")
     public BaseResponse<String> authenticate(@RequestBody AuthenRequest authenRequest) {
-        User user = userRepository.findByUsername(authenRequest.getUsername());
-        if (user == null || !passwordEncoder.matches(authenRequest.getPassword(), user.getPassword()))
-            return BaseResponse.failCode(null, 401, "Unauthorized");
-        return BaseResponse.success(jwtService.generateJwtToken(user.getUsername()));
+        return BaseResponse.success(jwtService.generateJwtToken(authenRequest));
     }
 
     @PostMapping("/register")
